@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Node from "./Node";
 
 function Main(props) {
   return (
@@ -8,6 +9,7 @@ function Main(props) {
     </div>
   );
 }
+
 export default Main;
 /*
 background-color: #ebf5f7;
