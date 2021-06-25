@@ -1,11 +1,12 @@
 import React from "react";
 import Navbar from "./Navbar";
-import Node from "./Node";
+import Linkedlist from "./Linkedlist";
 
 function Main(props) {
   return (
-    <div className="box-border">
+    <div className="box-border w-full">
       <Navbar />
+      <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:{}</span>
     </div>
   );
 }
