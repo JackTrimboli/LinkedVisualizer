@@ -1,7 +1,10 @@
 import React from "react";
 
 const Linkedlist = (props) => {
-  return <div></div>;
+  return (
+  <div> 
+    This is a Linked list!
+  </div>);
 };
 
 export default Linkedlist;

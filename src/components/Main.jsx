@@ -1,12 +1,34 @@
-import React from "react";
+import {useState, React} from "react";
 import Navbar from "./Navbar";
 import Linkedlist from "./Linkedlist";
+import Bst from './Bst';
+import Heap from "./Heap";
 
 function Main(props) {
+  const [structure, setStructure] = useState(<div>No Selection!</div>)
+  const [label, setLabel] = useState("None")
+
+
+  function handleCallBack(selectData){
+    if (selectData === 1){
+      setLabel("Linked-List");
+      setStructure(<Linkedlist/>);
+    }
+    else if (selectData === 2){
+      setLabel("Binary-Search-Tree");
+      setStructure(<Bst/>);
+    }
+    else if (selectData === 3){
+      setLabel("Heap");
+      setStructure(<Heap/>);
+    }
+    
+  }
   return (
     <div className="box-border w-full">
-      <Navbar />
-      <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:{}</span>
+      <Navbar parentCallBack = {handleCallBack}/>
+      <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:  {label}</span> 
+      {structure}
     </div>
   );
 }
