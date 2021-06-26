@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
+import Node from "./Node";
 
 const Linkedlist = (props) => {
+  const [list, setList] = useState();
   return (
   <div> 
-    This is a Linked list!
+    <Node/>
   </div>);
 };
 
