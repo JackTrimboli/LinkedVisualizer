@@ -1,34 +1,59 @@
 import {useState, React} from "react";
-import Navbar from "./Navbar";
+import Select from "react-select";
+import Button from "./Button";
 import Linkedlist from "./Linkedlist";
 import Bst from './Bst';
 import Heap from "./Heap";
 
 function Main(props) {
-  const [structure, setStructure] = useState(<div>No Selection!</div>)
+  const [structure, setStructure] = useState(null)
   const [label, setLabel] = useState("None")
-
-
-  function handleCallBack(selectData){
-    if (selectData === 1){
+  const options = [
+    { value: 1, label: "Linked-List" },
+    { value: 2, label: "Binary Search Tree" },
+    { value: 3, label: "Heap" },
+  ];
+  const selectStyles ={
+    option: (provided, state) => ({
+      ...provided,
+      color: "black",
+      padding: 10,
+    }),
+    singleValue: (provided) => {
+      return { ...provided};
+    }
+  }
+  function handleSelectChange(selectData){
+    if (selectData.value === 1){
       setLabel("Linked-List");
       setStructure(<Linkedlist/>);
     }
-    else if (selectData === 2){
+    else if (selectData.value === 2){
       setLabel("Binary-Search-Tree");
       setStructure(<Bst/>);
     }
-    else if (selectData === 3){
+    else if (selectData.value === 3){
       setLabel("Heap");
       setStructure(<Heap/>);
-    }
-    
+    } 
   }
   return (
     <div className="box-border w-full">
-      <Navbar parentCallBack = {handleCallBack}/>
-      <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:  {label}</span> 
-      {structure}
+      <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
+      <Button text="Linked Visualizer"></Button>
+      <Button text="Add Node"></Button>
+      <Button text="Remove Node"></Button>
+      <Select
+      onChange={handleSelectChange}
+      options={options}
+      className="w-32 text-black-400 inline-block"
+      styles={selectStyles}
+    />
+    </nav>
+      {structure ?
+       <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:  {label}</span> :
+      <span className="flex justify-center mt-8 text-gray-400 text-lg">Select a Data Structure from the drop down menu above.</span>}
+      <div>{structure}</div>
     </div>
   );
 }
