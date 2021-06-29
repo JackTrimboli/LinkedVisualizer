@@ -1,16 +1,13 @@
 import {useState, React} from "react";
 import Select from "react-select";
-import Button from "./Button";
 import Linkedlist from "./Linkedlist";
 import Bst from './Bst';
 import Heap from "./Heap";
-import HiddenCard from "./HiddenCard";
+
 
 function Main(props) {
   const [structure, setStructure] = useState(null)
-  const [label, setLabel] = useState("None")
-  const [showAddCard, setShowAddCard] = useState(false)
-  const [showRemoveCard, setShowRemoveCard] = useState(false)
+ 
   const options = [ //React select options
     { value: 1, label: "Linked-List" },
     { value: 2, label: "Binary Search Tree" },
@@ -28,34 +25,32 @@ function Main(props) {
   }
   function handleSelectChange(selectData){
     if (selectData.value === 1){
-      setLabel("Linked-List");
       setStructure(<Linkedlist/>);
     }
     else if (selectData.value === 2){
-      setLabel("Binary-Search-Tree");
       setStructure(<Bst/>);
     }
     else if (selectData.value === 3){
-      setLabel("Heap");
       setStructure(<Heap/>);
     } 
   }
-  function handleAddNode(event){
-    event.preventDefault();
-    setShowAddCard(true);
-    console.log("Add card revealed")
-  }
-  function handleRemoveNode(event){
-    event.preventDefault();
-    setShowRemoveCard(true);
-    console.log("Remove card revealed")
-  }
+  // function handleAddNode(event){
+  //   event.preventDefault();
+  //   if(structure)
+  //     setShowAddCard(true);
+  //   console.log("Add card revealed")
+  // }
+  // function handleRemoveNode(event){
+  //   event.preventDefault();
+  //   if(structure)
+  //     setShowRemoveCard(true);
+  //   console.log("Remove card revealed")
+  // }
+
   return (
-    <div className="box-border w-full">
+    <div className="box-border w-full h-full">
       <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
         <button className="ml-8 mr-8">Linked Visualizer</button>
-        <button className="ml-8 mr-8" onClick={handleAddNode}>Add Node</button>
-        <button className="ml-8 mr-8">Remove Node</button>
         <Select
         autoFocus={true}
         onChange={handleSelectChange}
@@ -64,13 +59,7 @@ function Main(props) {
         styles={selectStyles}
         />
       </nav>
-      {structure ?
-        <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying:  {label}</span> :
-        <span className="flex justify-center mt-8 text-gray-400 text-lg">Select a Data Structure from the drop down menu above.</span>
-      }
-      <HiddenCard title="Enter Node Value:" showCard={showAddCard}/>
-      <HiddenCard title="Enter the Value to Remove:" showCard={showRemoveCard}/>
-      <div>{structure}</div>
+      {structure? structure : <span className="flex justify-center mt-8 text-gray-400 text-lg">Select a Data Structure from the drop down menu above.</span>}
     </div>
   );
 }
