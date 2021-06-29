@@ -7,6 +7,7 @@ const Linkedlist = (props) => {
     <li>{node}</li>
   });
   return (
+    //use effect here
   <div>
       <ul className="flex flex-row">{nodes}</ul>
   </div>
