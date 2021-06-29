@@ -3,11 +3,11 @@ import Select from "react-select";
 import Linkedlist from "./Linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
-import Node from "./Node"
+
 
 function Main(props) {
   const [structure, setStructure] = useState(null)
-  const [list, setList] = useState([<Node value={3}/>])
+  const [list, setList] = useState([])
   const [label, setLabel] = useState("")
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -49,27 +49,28 @@ function Main(props) {
   function handleAddNode(){
     if(structure){
       setShowAddModal(false);
-      const newList = [...list, <Node value={addModalData}/>];
+      const newList = [...list, addModalData];
       setList(newList);
-      console.log("Node of value " + addModalData + " added to list")
-      setAddModalData(null);
+      console.log("Node of value " + addModalData + " added to list");
+      console.log("current list: " + newList.toString());
     }else
       console.log("you must choose a structure first!")
+    setAddModalData(null);
   }
   function handleRemoveNode(){
     if(structure){
-      setShowRemoveModal(false)
-      const index = list.indexOf(1);
+      setShowRemoveModal(false);
+      const index = list.indexOf(removeModalData);
       if (index > -1) {
         const removed = list.splice(index, 1); //removes one element at the index of val
         setList(removed);
-        console.log("Node of value " + removeModalData + " removed from list")
+        console.log("Successfully removed node of value: " + removeModalData);
       }else{
         console.log("No node exists with the provided value: " + removeModalData);
       }
-      setRemoveModalData(null);
     }else
       console.log("you must choose a structure first!")
+    setRemoveModalData(null);
   }
   function openAddModal(){
     setShowAddModal(true);
@@ -120,7 +121,7 @@ function Main(props) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto items-center">
-                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center" value={addModalData? addModalData : 0} onChange={e => setAddModalData(e.target.value)}/> 
+                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"  onChange={e => setAddModalData(e.target.value)}/> 
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -169,7 +170,7 @@ function Main(props) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto items-center">
-                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center" value={removeModalData? removeModalData : 0} onChange={e => setRemoveModalData(e.target.value)}/> 
+                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"  onChange={e => setRemoveModalData(e.target.value)}/> 
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
