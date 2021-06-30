@@ -6,7 +6,7 @@ import Heap from "./Heap";
 
 
 function Main(props) {
-  const [structure, setStructure] = useState(null)
+  // const [structure, setStructure] = useState(null)
   const [list, setList] = useState([])
   const [label, setLabel] = useState("")
   const [showAddModal, setShowAddModal] = useState(false);
@@ -14,6 +14,7 @@ function Main(props) {
   const [addModalData, setAddModalData] = useState();
   const [removeModalData, setRemoveModalData] = useState();
   
+
   const options = [ //React select options
     { value: 1, label: "Linked-List" },
     { value: 2, label: "Binary Search Tree" },
@@ -31,23 +32,23 @@ function Main(props) {
   }
   function handleSelectChange(selectData){
     if (selectData.value === 1){
-      setStructure(<Linkedlist listData={list}/>);
       setList([]);
       setLabel("Linked-List");
+      console.log("Link-list Selected. The List is empty.")
     }
     else if (selectData.value === 2){
-      setStructure(<Bst listData={list}/>);
       setList([]);
       setLabel("Binary-Search-Tree");
+      console.log("BST Selected. The List is empty.")
     }
     else if (selectData.value === 3){
-      setStructure(<Heap listData={list}/>);
       setList([]);
       setLabel("Heap");
+      console.log("Heap Selected. The List is empty.")
     } 
   }
   function handleAddNode(){
-    if(structure){
+    if(label){
       setShowAddModal(false);
       const newList = [...list, addModalData];
       setList(newList);
@@ -58,7 +59,7 @@ function Main(props) {
     setAddModalData(null);
   }
   function handleRemoveNode(){
-    if(structure){
+    if(label){
       setShowRemoveModal(false);
       const index = list.indexOf(removeModalData);
       if (index > -1) {
@@ -72,19 +73,13 @@ function Main(props) {
       console.log("you must choose a structure first!")
     setRemoveModalData(null);
   }
-  function openAddModal(){
-    setShowAddModal(true);
-  }
-  function openRemoveModal(){
-    setShowRemoveModal(true);
-  }
  
   return (
     <div className="box-border w-full h-full">
       <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
         <button className="ml-8 mr-8">Linked Visualizer</button>
-        <button className="relative ml-8 mr-8" onClick={openAddModal}>Add Node</button>
-        <button className="relative ml-8 mr-8" onClick={openRemoveModal}>Remove Node</button>
+        <button className="relative ml-8 mr-8" onClick={() => setShowAddModal(true)}>Add Node</button>
+        <button className="relative ml-8 mr-8" onClick={() => setShowRemoveModal(true)}>Remove Node</button>
         <Select
         autoFocus={true}
         onChange={handleSelectChange}
@@ -93,10 +88,17 @@ function Main(props) {
         styles={selectStyles}
         />
       </nav>
-      {structure? 
+      {label? 
       <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying: {label}</span> : 
       <span className="flex justify-center mt-8 text-gray-400 text-lg">Select a Data Structure from the drop down menu above.</span>}
-      {structure}
+
+      {label==="Linked-List"? <Linkedlist listData={list}/>:
+      label === "Binary-Search-Tree"? <Bst listData={list}/>:
+      label === "Heap"? <Heap listData={list}/>:
+      null
+      }
+      
+      
       
       {showAddModal? <>
           <div
