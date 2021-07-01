@@ -56,15 +56,15 @@ function Main(props) {
     console.log("Removal attempt made. Current List: " + list.toLocaleString());
     setShowRemoveModal(false);
     if (label && list.length > 0) {
-      const idx = list.indexOf(removeModalData);
-      setRemovalIdx(idx);
+      let index = list.indexOf(removeModalData);
+      setRemovalIdx(index);
       let newList = [...list];
-      newList.splice(idx, 1);
+      newList.splice(index, 1);
       setList(newList);
-      console.log("List After Removal: " + list.toLocaleString());
     } else {
       console.log("You cannot remove data from an empty structure.");
     }
+    console.log("List After Removal: " + list.toLocaleString());
     setRemoveModalData(null);
   }
   // function displayCurrentList() {
