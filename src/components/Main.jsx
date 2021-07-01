@@ -1,109 +1,124 @@
-import {useState, React} from "react";
+import { useState, React } from "react";
 import Select from "react-select";
 import Linkedlist from "./Linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
 
-
 function Main(props) {
-  // const [structure, setStructure] = useState(null)
-  const [list, setList] = useState([])
-  const [label, setLabel] = useState("")
+  const [list, setList] = useState([]);
+  const [label, setLabel] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [addModalData, setAddModalData] = useState();
   const [removeModalData, setRemoveModalData] = useState();
-  
+  const [removalIdx, setRemovalIdx] = useState();
 
-  const options = [ //React select options
+  const options = [
+    //React select options
     { value: 1, label: "Linked-List" },
     { value: 2, label: "Binary Search Tree" },
     { value: 3, label: "Heap" },
   ];
-  const selectStyles ={ //React Select styling API
+  const selectStyles = {
+    //React Select styling API
     option: (provided, state) => ({
       ...provided,
       color: "black",
       padding: 8,
     }),
     singleValue: (provided) => {
-      return { ...provided};
-    }
-  }
-  function handleSelectChange(selectData){
-    if (selectData.value === 1){
-      setList([]);
+      return { ...provided };
+    },
+  };
+  function handleSelectChange(selectData) {
+    if (selectData.value === 1) {
       setLabel("Linked-List");
-      console.log("Link-list Selected. The List is empty.")
-    }
-    else if (selectData.value === 2){
-      setList([]);
+      console.log("Link-list Selected. The List is empty.");
+    } else if (selectData.value === 2) {
       setLabel("Binary-Search-Tree");
-      console.log("BST Selected. The List is empty.")
-    }
-    else if (selectData.value === 3){
-      setList([]);
+      console.log("BST Selected. The List is empty.");
+    } else if (selectData.value === 3) {
       setLabel("Heap");
-      console.log("Heap Selected. The List is empty.")
-    } 
+      console.log("Heap Selected. The List is empty.");
+    }
+    setList([]);
   }
-  function handleAddNode(){
-    if(label){
-      setShowAddModal(false);
-      const newList = [...list, addModalData];
-      setList(newList);
-      console.log("Node of value " + addModalData + " added to list");
-      console.log("current list: " + newList.toString());
-    }else
-      console.log("you must choose a structure first!")
+  function handleAddNode() {
+    if (!label) {
+      console.log("Pick a structure first!");
+      return;
+    }
+    setShowAddModal(false);
+    setList([...list, addModalData]);
     setAddModalData(null);
   }
-  function handleRemoveNode(){
-    if(label){
-      setShowRemoveModal(false);
-      const index = list.indexOf(removeModalData);
-      if (index > -1) {
-        const removed = list.splice(index, 1); //removes one element at the index of val
-        setList(removed);
-        console.log("Successfully removed node of value: " + removeModalData);
-      }else{
-        console.log("No node exists with the provided value: " + removeModalData);
-      }
-    }else
-      console.log("you must choose a structure first!")
+  function handleRemoveNode() {
+    console.log("Removal attempt made. Current List: " + list.toLocaleString());
+    setShowRemoveModal(false);
+    if (label && list.length > 0) {
+      const idx = list.indexOf(removeModalData);
+      setRemovalIdx(idx);
+      let newList = [...list];
+      newList.splice(idx, 1);
+      setList(newList);
+      console.log("List After Removal: " + list.toLocaleString());
+    } else {
+      console.log("You cannot remove data from an empty structure.");
+    }
     setRemoveModalData(null);
   }
- 
+  // function displayCurrentList() {
+  //   console.log(list.toLocaleString());
+  // } FOR TESTING PURPOSES
   return (
     <div className="box-border w-full h-full">
       <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
         <button className="ml-8 mr-8">Linked Visualizer</button>
-        <button className="relative ml-8 mr-8" onClick={() => setShowAddModal(true)}>Add Node</button>
-        <button className="relative ml-8 mr-8" onClick={() => setShowRemoveModal(true)}>Remove Node</button>
+        <button
+          className="relative ml-8 mr-8"
+          onClick={() => setShowAddModal(true)}
+        >
+          Add Node
+        </button>
+        <button
+          className="relative ml-8 mr-8"
+          onClick={() => setShowRemoveModal(true)}
+        >
+          Remove Node
+        </button>
+        {/* ONLY FOR TESTING PURPOSES
+         <button className="relative ml-8 mr-8" onClick={displayCurrentList}>
+          Display List
+        </button> */}
         <Select
-        autoFocus={true}
-        onChange={handleSelectChange}
-        options={options}
-        className="w-32 text-black-400 inline-block"
-        styles={selectStyles}
+          autoFocus={true}
+          onChange={handleSelectChange}
+          options={options}
+          className="w-32 text-black-400 inline-block"
+          styles={selectStyles}
         />
       </nav>
-      {label? 
-      <span className="flex justify-center mt-8 text-gray-400 text-lg">Now Displaying: {label}</span> : 
-      <span className="flex justify-center mt-8 text-gray-400 text-lg">Select a Data Structure from the drop down menu above.</span>}
+      {label ? (
+        <span className="flex justify-center mt-8 text-gray-400 text-lg">
+          Now Displaying: {label}
+        </span>
+      ) : (
+        <span className="flex justify-center mt-8 text-gray-400 text-lg">
+          Select a Data Structure from the drop down menu above.
+        </span>
+      )}
 
-      {label==="Linked-List"? <Linkedlist listData={list}/>:
-      label === "Binary-Search-Tree"? <Bst listData={list}/>:
-      label === "Heap"? <Heap listData={list}/>:
-      null
-      }
-      
-      
-      
-      {showAddModal? <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+      {label === "Linked-List" ? (
+        <Linkedlist listData={list} removal={removalIdx} />
+      ) : label === "Binary-Search-Tree" ? (
+        <Bst listData={list} removal={removalIdx} />
+      ) : label === "Heap" ? (
+        <Heap listData={list} removal={removalIdx} />
+      ) : null}
+
+      {showAddModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-sm">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -123,7 +138,12 @@ function Main(props) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto items-center">
-                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"  onChange={e => setAddModalData(e.target.value)}/> 
+                  <input
+                    type="number"
+                    placeholder="Enter a number"
+                    className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
+                    onChange={(e) => setAddModalData(e.target.value)}
+                  />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -146,13 +166,12 @@ function Main(props) {
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>:
-        null}
+        </>
+      ) : null}
 
-        {showRemoveModal? <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+      {showRemoveModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-sm">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -172,7 +191,12 @@ function Main(props) {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto items-center">
-                  <input type="number" placeholder="Enter a number" className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"  onChange={e => setRemoveModalData(e.target.value)}/> 
+                  <input
+                    type="number"
+                    placeholder="Enter a number"
+                    className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
+                    onChange={(e) => setRemoveModalData(e.target.value)}
+                  />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -195,8 +219,8 @@ function Main(props) {
             </div>
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>:
-        null}
+        </>
+      ) : null}
     </div>
   );
 }
