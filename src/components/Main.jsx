@@ -1,5 +1,6 @@
 import { useState, React } from "react";
 import Select from "react-select";
+import PopupModal from "./PopupModal";
 import Linkedlist from "./Linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
@@ -7,10 +8,8 @@ import Heap from "./Heap";
 function Main(props) {
   const [list, setList] = useState([]);
   const [label, setLabel] = useState("");
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showRemoveModal, setShowRemoveModal] = useState(false);
-  const [addModalData, setAddModalData] = useState();
-  const [removeModalData, setRemoveModalData] = useState();
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [showRemovePopup, setShowRemovePopup] = useState(false);
   const [removalIdx, setRemovalIdx] = useState();
 
   const options = [
@@ -43,61 +42,68 @@ function Main(props) {
     }
     setList([]);
   }
-  function handleAddNode() {
+  function handleAddNode(value) {
     if (!label) {
       console.log("Pick a structure first!");
       return;
     }
-    if (!addModalData) {
+    if (!value) {
       console.log("You must enter a value.");
       return;
     }
-    setShowAddModal(false);
-    setList([...list, addModalData]);
-    setAddModalData(null);
+    toggleAddPopup();
+    setList([...list, value]);
+    console.log("List After Addition: " + list.toLocaleString());
   }
-  function handleRemoveNode() {
-    if (!removeModalData) {
+  function handleRemoveNode(value) {
+    if (!label) {
+      console.log("Pick a Structure First!");
+      return;
+    }
+    if (!value) {
       console.log("You must enter a value.");
       return;
     }
-    console.log("Removal attempt made. Current List: " + list.toLocaleString());
-    setShowRemoveModal(false);
-    if (label && list.length > 0) {
-      let index = list.indexOf(removeModalData);
+    toggleRemovePopup();
+    if (list.length > 0) {
+      let index = list.indexOf(value);
       setRemovalIdx(index);
       let newList = [...list];
       newList.splice(index, 1);
       setList(newList);
-    } else {
-      console.log("You cannot remove data from an empty structure.");
     }
     console.log("List After Removal: " + list.toLocaleString());
-    setRemoveModalData(null);
   }
-  // function displayCurrentList() {
-  //   console.log(list.toLocaleString());
-  // } FOR TESTING PURPOSES
+  function toggleAddPopup() {
+    if (label === "") {
+      console.log("You must select a structure before you can add nodes.");
+      return;
+    }
+    if (showAddPopup) setShowAddPopup(false);
+    else setShowAddPopup(true);
+  }
+  function toggleRemovePopup() {
+    if (label === "") {
+      console.log("You must select a structure before you can remove nodes.");
+      return;
+    }
+    if (showRemovePopup) setShowRemovePopup(false);
+    else setShowRemovePopup(true);
+  }
   return (
     <div className="box-border w-full h-full">
+      {/* <Tutorial /> */}
       <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
-        <button className="ml-8 mr-8">Linked Visualizer</button>
-        <button
-          className="relative ml-8 mr-8"
-          onClick={() => setShowAddModal(true)}
-        >
+        <button className="ml-8 mr-8 text-lg">Linked Visualizer</button>
+        <button className="relative ml-8 mr-8 text-lg" onClick={toggleAddPopup}>
           Add Node
         </button>
         <button
-          className="relative ml-8 mr-8"
-          onClick={() => setShowRemoveModal(true)}
+          className="relative ml-8 mr-8 text-lg"
+          onClick={toggleRemovePopup}
         >
           Remove Node
         </button>
-        {/* ONLY FOR TESTING PURPOSES
-         <button className="relative ml-8 mr-8" onClick={displayCurrentList}>
-          Display List
-        </button> */}
         <Select
           autoFocus={true}
           onChange={handleSelectChange}
@@ -124,112 +130,20 @@ function Main(props) {
         <Heap listData={list} removal={removalIdx} />
       ) : null}
 
-      {showAddModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-sm">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Enter Value to Add:
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowAddModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                <div className="relative p-6 flex-auto items-center">
-                  <input
-                    type="number"
-                    placeholder="Enter a number"
-                    className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
-                    onChange={(e) => setAddModalData(e.target.value)}
-                    defaultValue={0}
-                  />
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowAddModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={handleAddNode}
-                  >
-                    Add Node
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-
-      {showRemoveModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-sm">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Enter Value to Remove:
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowRemoveModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                <div className="relative p-6 flex-auto items-center">
-                  <input
-                    type="number"
-                    placeholder="Enter a number"
-                    className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
-                    onChange={(e) => setRemoveModalData(e.target.value)}
-                  />
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowRemoveModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={handleRemoveNode}
-                  >
-                    Remove Node
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
+      <PopupModal
+        show={showAddPopup}
+        title="Enter Value to Add:"
+        handleShow={toggleAddPopup}
+        action="Add Node"
+        handlerAction={handleAddNode}
+      />
+      <PopupModal
+        show={showRemovePopup}
+        title="Enter Value to Remove:"
+        handleShow={toggleRemovePopup}
+        action="Remove Node"
+        handlerAction={handleRemoveNode}
+      />
     </div>
   );
 }
