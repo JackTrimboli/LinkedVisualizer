@@ -3,9 +3,11 @@ const Node = (props) => {
   const val = props.value;
 
   return (
-    <div className="flex flex-row">
-      <div className="transform bg-blue-600 z-10 rounded-full h-20 w-20 border-2 border-black border-4 shadow-md hover:scale-150 cursor-pointer">
-        <p className="top-1/2 left-1/2 items-center mt-5 ml-1">Value: {val}</p>
+    <div className="flex flex-row text-center">
+      <div className="relative text-center transform bg-blue-600 z-10 rounded-full h-20 w-20 border-2 border-black border-4 shadow-md hover:scale-150 cursor-pointer">
+        <p className="absolute w-full top-1/4 flex justify-center text-2xl">
+          {val}
+        </p>
       </div>
       <div style={container}>
         <div style={stemStyles}></div>

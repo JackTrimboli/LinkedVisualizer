@@ -1,14 +1,11 @@
 import React from "react";
 import Node from "./Node";
 
-
 const Bst = (props) => {
-  
-
-  return(
-  <div>
-    BST
-  </div>
+  return (
+    <div>
+      <Node />
+    </div>
   );
 };
 

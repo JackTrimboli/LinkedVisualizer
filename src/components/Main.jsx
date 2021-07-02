@@ -5,7 +5,7 @@ import Linkedlist from "./Linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
 
-function Main(props) {
+function Main() {
   const [list, setList] = useState([]);
   const [label, setLabel] = useState("");
   const [showAddPopup, setShowAddPopup] = useState(false);
@@ -25,20 +25,35 @@ function Main(props) {
       color: "black",
       padding: 8,
     }),
+    container: (provided) => ({
+      ...provided,
+      width: "200px",
+      marginLeft: "1rem",
+    }),
     singleValue: (provided) => {
-      return { ...provided };
+      const transition = "opacity 300ms";
+      return { ...provided, transition };
     },
   };
   function handleSelectChange(selectData) {
     if (selectData.value === 1) {
+      if (label === "Linked-List") {
+        console.log("Structure already selected.");
+        return;
+      }
       setLabel("Linked-List");
       console.log("Link-list Selected. The List is empty.");
     } else if (selectData.value === 2) {
+      if (label === "Binary-Search-Tree") {
+        console.log("Structure already selected.");
+        return;
+      }
       setLabel("Binary-Search-Tree");
       console.log("BST Selected. The List is empty.");
     } else if (selectData.value === 3) {
       setLabel("Heap");
       console.log("Heap Selected. The List is empty.");
+      return;
     }
     setList([]);
   }
@@ -52,8 +67,7 @@ function Main(props) {
       return;
     }
     toggleAddPopup();
-    setList([...list, value]);
-    console.log("List After Addition: " + list.toLocaleString());
+    setList([...list, parseInt(value)]);
   }
   function handleRemoveNode(value) {
     if (!label) {
@@ -66,7 +80,7 @@ function Main(props) {
     }
     toggleRemovePopup();
     if (list.length > 0) {
-      let index = list.indexOf(value);
+      let index = list.indexOf(parseInt(value));
       setRemovalIdx(index);
       let newList = [...list];
       newList.splice(index, 1);
@@ -94,12 +108,17 @@ function Main(props) {
     <div className="box-border w-full h-full">
       {/* <Tutorial /> */}
       <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
-        <button className="ml-8 mr-8 text-lg">Linked Visualizer</button>
-        <button className="relative ml-8 mr-8 text-lg" onClick={toggleAddPopup}>
+        <button className="ml-8 mr-8 text-lg font-bold focus:outline-none">
+          Linked Visualizer
+        </button>
+        <button
+          className="relative ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 active:bg-blue-600"
+          onClick={toggleAddPopup}
+        >
           Add Node
         </button>
         <button
-          className="relative ml-8 mr-8 text-lg"
+          className="relative ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
           onClick={toggleRemovePopup}
         >
           Remove Node

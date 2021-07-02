@@ -1,4 +1,4 @@
-import React from "react";
+import { React } from "react";
 
 const PopupModal = (props) => {
   let modalData = 0;
@@ -8,6 +8,11 @@ const PopupModal = (props) => {
   }
   function dataHandler() {
     props.handlerAction(modalData);
+  }
+  function handleKeyPress(event) {
+    if (event.key === "Enter") {
+      props.handlerAction(modalData);
+    }
   }
 
   if (props.show === true) {
@@ -22,13 +27,17 @@ const PopupModal = (props) => {
                 <h3 className="text-3xl font-semibold">{props.title}</h3>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto items-center">
+              <div className="relative p-6 flex-auto items-center justify-center items-center">
                 <input
+                  className="my-4 ml-5 py-2 bg-gray-100 text-xl leading-relaxed text-center rounded-md focus:outline-none"
                   type="number"
                   placeholder="Enter a number"
-                  className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
                   onChange={(e) => setModalData(e.target.value)}
                   defaultValue={0}
+                  autoFocus={true}
+                  onFocus={(event) => event.target.select()}
+                  onKeyPress={handleKeyPress}
+                  maxLength={5}
                 />
               </div>
               {/*footer*/}
