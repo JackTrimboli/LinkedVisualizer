@@ -6,8 +6,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['active'],
-      scale: ['active'],
+      backgroundColor: ["active"],
+      scale: ["active", "hover"],
     },
   },
   plugins: [],

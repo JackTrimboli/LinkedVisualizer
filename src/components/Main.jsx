@@ -48,11 +48,19 @@ function Main(props) {
       console.log("Pick a structure first!");
       return;
     }
+    if (!addModalData) {
+      console.log("You must enter a value.");
+      return;
+    }
     setShowAddModal(false);
     setList([...list, addModalData]);
     setAddModalData(null);
   }
   function handleRemoveNode() {
+    if (!removeModalData) {
+      console.log("You must enter a value.");
+      return;
+    }
     console.log("Removal attempt made. Current List: " + list.toLocaleString());
     setShowRemoveModal(false);
     if (label && list.length > 0) {
@@ -143,6 +151,7 @@ function Main(props) {
                     placeholder="Enter a number"
                     className="my-4 ml-5 text-blueGray-500 text-lg leading-relaxed text-center"
                     onChange={(e) => setAddModalData(e.target.value)}
+                    defaultValue={0}
                   />
                 </div>
                 {/*footer*/}
