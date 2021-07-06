@@ -58,6 +58,7 @@ function Main() {
     setList([]);
   }
   function handleAddNode(value) {
+    debugger;
     if (!label) {
       console.log("Pick a structure first!");
       return;
