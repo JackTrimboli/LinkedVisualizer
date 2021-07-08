@@ -1,7 +1,6 @@
 import { React } from "react";
 const Node = (props) => {
   const val = props.value;
-
   return (
     <div className="flex flex-row text-center">
       <div className="relative text-center transform bg-blue-600 z-10 rounded-full h-20 w-20 border-2 border-black border-4 shadow-md hover:scale-150 cursor-pointer">
