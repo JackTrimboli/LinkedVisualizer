@@ -14,25 +14,29 @@ const Linkedlist = (props) => {
   useEffect(() => {
     if (isMounted) {
       if (nodes.length < props.listData.length) {
-        //addition
-        setNodes([
-          ...nodes,
-          <Node value={props.listData[props.listData.length - 1]} key={key} />,
-        ]);
-        setKey(key + 1);
+        handleAddNode();
       } else if (nodes.length > props.listData.length) {
-        //Removal
-        console.log(
-          "Removal Detect by useEffect in 'Linked-List. Current List:" +
-            props.listData.toLocaleString()
-        );
-        let newNodes = [...nodes];
-        newNodes.splice(props.removal, 1);
-        setNodes(newNodes);
+        handleRemoveNode();
       }
     } else setIsMounted(true);
   }, [props.listData]);
 
+  function handleAddNode() {
+    setNodes([
+      ...nodes,
+      <Node value={props.listData[props.listData.length - 1]} key={key} />,
+    ]);
+    setKey(key + 1);
+  }
+  function handleRemoveNode() {
+    console.log(
+      "Removal Detect by useEffect in 'Linked-List. Current List:" +
+        props.listData.toLocaleString()
+    );
+    let newNodes = [...nodes];
+    newNodes.splice(props.removal, 1);
+    setNodes(newNodes);
+  }
   if (isEmpty()) {
     return (
       <span className="absolute w-full top-1/2 flex justify-center text-gray-400 text-lg">

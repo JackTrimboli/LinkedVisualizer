@@ -1,11 +1,10 @@
 import { React } from "react";
 const Node = (props) => {
-  const val = props.value;
   return (
     <div className="flex flex-row text-center">
       <div className="relative text-center transform bg-blue-600 z-10 rounded-full h-20 w-20 border-2 border-black border-4 shadow-md hover:scale-150 cursor-pointer">
         <p className="absolute w-full top-1/4 flex justify-center text-2xl">
-          {val}
+          {props.value}
         </p>
       </div>
       <div style={container}>
@@ -15,7 +14,6 @@ const Node = (props) => {
     </div>
   );
 };
-
 const container = {
   display: "flex",
   marginLeft: "-5px",

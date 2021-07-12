@@ -112,13 +112,13 @@ function Main() {
           Linked Visualizer
         </button>
         <button
-          className="relative ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 active:bg-blue-600"
+          className="ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 active:bg-blue-600"
           onClick={toggleAddPopup}
         >
           Add Node
         </button>
         <button
-          className="relative ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
+          className="ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
           onClick={toggleRemovePopup}
         >
           Remove Node
@@ -127,7 +127,7 @@ function Main() {
           autoFocus={true}
           onChange={handleSelectChange}
           options={options}
-          className="w-32 text-black-400 inline-block"
+          className="inline-block"
           styles={selectStyles}
         />
       </nav>
