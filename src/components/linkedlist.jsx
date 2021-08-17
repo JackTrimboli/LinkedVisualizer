@@ -6,11 +6,6 @@ const Linkedlist = (props) => {
   const [key, setKey] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
-  function isEmpty() {
-    if (nodes.length === 0) return true;
-    return false;
-  }
-
   useEffect(() => {
     if (isMounted) {
       if (nodes.length < props.listData.length) {
@@ -20,6 +15,11 @@ const Linkedlist = (props) => {
       }
     } else setIsMounted(true);
   }, [props.listData]);
+
+  function isEmpty() {
+    if (nodes.length === 0) return true;
+    return false;
+  }
 
   function handleAddNode() {
     setNodes([

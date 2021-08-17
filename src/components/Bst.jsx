@@ -1,64 +1,39 @@
 import { React, useState, useEffect } from "react";
 import BstNode from "./BstNode";
-import { Tree, TreeNode } from "react-organizational-chart";
+import { Tree } from "react-organizational-chart";
 
 const Bst = (props) => {
-  const [numNodes, setNumNodes] = useState(0);
-  const [root, setRoot] = useState(null);
+  const [root, setRoot] = useState();
 
-  // useEffect(() => {
-  //   if (props.listData.length > numNodes) {
-  //     //Addition of a node detected
-  //     handleAddNode();
-  //   } else if (props.listData.length < numNodes) {
-  //     //Removal of a node detected
-  //     setNumNodes(numNodes - 1);
-  //     handleRemoveNode();
-  //   }
-  // }, [props.listData]);
+  useEffect(() => {
+    setRoot(
+      <BstNode
+        value={props.listData[0]}
+        remaining={props.listData.slice(1, props.listData.length)}
+      />
+    );
+  }, [props.listData]);
 
-  // function handleAddNode() {
-  //   if (numNodes === 0) {
-  //     console.log(props.listData[0]);
-  //   } else {
-  //     return;
-  //   }
-  //   setNumNodes(numNodes + 1);
-  // }
-  // function handleRemoveNode() {
-  //   return;
-  // }
-
-  return (
-    <div className="m-0 absolute w-full top-1/3 flex justify-evenly">
-      <Tree
-        label={null}
-        lineWidth={"5px"}
-        lineColor={"black"}
-        lineBorderRadius={"10px"}
-      >
-        <BstNode
-          value={1}
-          leftChild={{
-            value: "1",
-            rightChild: null,
-            leftChild: null,
-          }}
-          rightChild={{
-            value: "1",
-            rightChild: null,
-            leftChild: null,
-          }}
-        />
-      </Tree>
-    </div>
-  );
+  if (props.listData.length === 0) {
+    return (
+      <span className="absolute w-full top-1/2 flex justify-center text-gray-400 text-lg">
+        The BST is currently empty.
+      </span>
+    );
+  } else {
+    return (
+      <div className="m-0 absolute w-full top-1/3 flex justify-evenly">
+        <Tree
+          label={null}
+          lineWidth={"5px"}
+          lineColor={"black"}
+          lineBorderRadius={"10px"}
+        >
+          {root}
+        </Tree>
+      </div>
+    );
+  }
 };
-/*
-  --- BST Node Function --- 
-    1.
-    2.
-    3.
-*/
 
 export default Bst;

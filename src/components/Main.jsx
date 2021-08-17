@@ -144,7 +144,7 @@ function Main() {
       {label === "Linked-List" ? (
         <Linkedlist listData={list} removal={removalIdx} />
       ) : label === "Binary-Search-Tree" ? (
-        <Bst listData={list} removal={removalIdx} />
+        <Bst listData={list} />
       ) : label === "Heap" ? (
         <Heap listData={list} removal={removalIdx} />
       ) : null}
