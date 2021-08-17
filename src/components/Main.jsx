@@ -67,7 +67,7 @@ function Main() {
       return;
     }
     toggleAddPopup();
-    setList([...list, parseInt(value)]);
+    setList((list) => [...list, parseInt(value)]);
   }
   function handleRemoveNode(value) {
     if (!label) {

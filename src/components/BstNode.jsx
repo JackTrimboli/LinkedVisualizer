@@ -1,25 +1,24 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import { TreeNode } from "react-organizational-chart";
 
 const BstNode = ({ value, remaining }) => {
-  const [smaller, setSmaller] = useState([]); //array of values smaller than current
-  const [larger, setLarger] = useState([]); //array of values larger than current
-  const [mounted, setMounted] = useState(false);
+  const smaller = getSmaller(remaining);
+  const larger = getLarger(remaining);
 
-  useEffect(() => {
-    //get info for each list on mount
-    if (!mounted) {
-      let small = [];
-      let large = [];
-      for (let i = 0; i < remaining.length; i++) {
-        if (remaining[i] <= value) small.push(remaining[i]);
-        else large.push(remaining[i]);
-      }
-      setSmaller(small);
-      setLarger(large);
-      setMounted(true);
+  function getSmaller(data) {
+    let small = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i] <= value) small.push(data[i]);
     }
-  }, []);
+    return small;
+  }
+  function getLarger(data) {
+    let large = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i] > value) large.push(data[i]);
+    }
+    return large;
+  }
 
   const nodeLabel = (
     <div className="-my-2 mx-6 text-center inline-block">

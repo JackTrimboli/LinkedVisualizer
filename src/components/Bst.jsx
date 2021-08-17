@@ -1,18 +1,13 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import BstNode from "./BstNode";
 import { Tree } from "react-organizational-chart";
 
 const Bst = (props) => {
-  const [root, setRoot] = useState();
+  const bst = convertToBinaryTree(props.listData);
 
-  useEffect(() => {
-    setRoot(
-      <BstNode
-        value={props.listData[0]}
-        remaining={props.listData.slice(1, props.listData.length)}
-      />
-    );
-  }, [props.listData]);
+  function convertToBinaryTree(data) {
+    return <BstNode value={data[0]} remaining={data.slice(1, data.length)} />;
+  }
 
   if (props.listData.length === 0) {
     return (
@@ -29,7 +24,7 @@ const Bst = (props) => {
           lineColor={"black"}
           lineBorderRadius={"10px"}
         >
-          {root}
+          {bst}
         </Tree>
       </div>
     );
