@@ -93,10 +93,13 @@ function Main() {
     }
   }
   function removeBstNode(value) {
-    debugger;
     value = parseInt(value);
     //Step one: Find first occurance of the val being deleted
     const index = list.indexOf(value);
+    if (index === -1) {
+      console.log("Value does not exist in this tree.");
+      return;
+    }
     let newList = [...list];
 
     // Step two: get the subtree of val represented as an array
@@ -223,9 +226,9 @@ function Main() {
       {label === "Linked-List" ? (
         <Linkedlist listData={list} removal={removalIdx} />
       ) : label === "Binary-Search-Tree" ? (
-        <Bst listData={list} removal={removalIdx} />
+        <Bst listData={list} />
       ) : label === "Heap" ? (
-        <Heap listData={list} removal={removalIdx} />
+        <Heap listData={list} />
       ) : null}
 
       <PopupModal
