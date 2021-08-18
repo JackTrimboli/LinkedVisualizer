@@ -19,10 +19,11 @@ const Bst = (props) => {
     return (
       <div className="m-0 absolute w-full top-1/3 flex justify-evenly">
         <Tree
-          label={null}
           lineWidth={"5px"}
           lineColor={"black"}
           lineBorderRadius={"10px"}
+          nodePadding={"15px"}
+          lineHeight={"30px"}
         >
           {bst}
         </Tree>
