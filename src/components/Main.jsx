@@ -67,7 +67,21 @@ function Main() {
       return;
     }
     toggleAddPopup();
-    setList((list) => [...list, parseInt(value)]);
+    value = parseInt(value);
+    if (label !== "Heap") setList((list) => [...list, value]);
+    else handleAddHeap(value);
+  }
+  function handleAddHeap(value) {
+    let newList = [...list];
+    let currentPosition = newList.length;
+    let parentPosition = Math.floor((currentPosition - 1) / 2);
+    while (currentPosition > 0 && newList[parentPosition] < value) {
+      newList[currentPosition] = newList[parentPosition];
+      currentPosition = parentPosition;
+      parentPosition = Math.floor((parentPosition - 1) / 2);
+    }
+    newList[currentPosition] = value;
+    setList(newList);
   }
   function handleRemoveNode(value) {
     if (!label) {
