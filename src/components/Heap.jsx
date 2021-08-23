@@ -12,7 +12,7 @@ const Heap = (props) => {
   if (props.listData.length === 0) {
     return (
       <span className="absolute w-full top-1/2 flex justify-center text-gray-400 text-lg">
-        The Heap is currently empty.
+        The Max-Heap is currently empty.
       </span>
     );
   } else {

@@ -18,14 +18,14 @@ const HeapNode = ({ value, remaining, n }) => {
         <HeapNode
           value={remaining[2 * n + 1]}
           remaining={remaining}
-          n={remaining.indexOf(remaining[2 * n + 1])}
+          n={2 * n + 1}
         />
       )}
       {remaining[2 * n + 2] && (
         <HeapNode
           value={remaining[2 * n + 2]}
           remaining={remaining}
-          n={remaining.indexOf(remaining[2 * n + +2])}
+          n={2 * n + 2}
         />
       )}
     </TreeNode>

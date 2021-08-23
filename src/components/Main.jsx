@@ -16,7 +16,7 @@ function Main() {
     //React select options
     { value: 1, label: "Linked-List" },
     { value: 2, label: "Binary Search Tree" },
-    { value: 3, label: "Heap" },
+    { value: 3, label: "Max-Heap" },
   ];
   const selectStyles = {
     //React Select styling API
@@ -51,8 +51,8 @@ function Main() {
       setLabel("Binary-Search-Tree");
       console.log("BST Selected. The List is empty.");
     } else if (selectData.value === 3) {
-      setLabel("Heap");
-      console.log("Heap Selected. The List is empty.");
+      setLabel("Max-Heap");
+      console.log("Max-Heap Selected. The List is empty.");
       return;
     }
     setList([]);
@@ -68,20 +68,15 @@ function Main() {
     }
     toggleAddPopup();
     value = parseInt(value);
-    if (label !== "Heap") setList((list) => [...list, value]);
+    if (label !== "Max-Heap") setList((list) => [...list, value]);
     else handleAddHeap(value);
   }
   function handleAddHeap(value) {
+    debugger;
     let newList = [...list];
     let currentPosition = newList.length;
     let parentPosition = Math.floor((currentPosition - 1) / 2);
-    while (currentPosition > 0 && newList[parentPosition] < value) {
-      newList[currentPosition] = newList[parentPosition];
-      currentPosition = parentPosition;
-      parentPosition = Math.floor((parentPosition - 1) / 2);
-    }
-    newList[currentPosition] = value;
-    setList(newList);
+    trickleUp(value, newList, currentPosition, parentPosition);
   }
   function handleRemoveNode(value) {
     if (!label) {
@@ -93,13 +88,14 @@ function Main() {
       return;
     }
     toggleRemovePopup();
+    value = parseInt(value);
     if (label === "Linked-List") removeListNode(value);
     else if (label === "Binary-Search-Tree") removeBstNode(value);
-    else if (label === "Heap") removeHeapNode(value);
+    else if (label === "Max-Heap") removeHeapNode(value);
   }
   function removeListNode(value) {
     if (list.length > 0) {
-      const index = list.indexOf(parseInt(value));
+      const index = list.indexOf(value);
       setRemovalIdx(index);
       let newList = [...list];
       newList.splice(index, 1);
@@ -107,7 +103,6 @@ function Main() {
     }
   }
   function removeBstNode(value) {
-    value = parseInt(value);
     //Step one: Find first occurance of the val being deleted
     const index = list.indexOf(value);
     if (index === -1) {
@@ -181,9 +176,7 @@ function Main() {
         break;
     }
   }
-  function removeHeapNode(value) {
-    return;
-  }
+  function removeHeapNode(value) {}
   function toggleAddPopup() {
     if (label === "") {
       console.log("You must select a structure before you can add nodes.");
@@ -199,6 +192,36 @@ function Main() {
     }
     if (showRemovePopup) setShowRemovePopup(false);
     else setShowRemovePopup(true);
+  }
+  function trickleUp(value, newList, currentPosition, parentPosition) {
+    debugger;
+    while (currentPosition > 0 && newList[parentPosition] < value) {
+      newList[currentPosition] = newList[parentPosition];
+      currentPosition = parentPosition;
+      parentPosition = Math.floor((parentPosition - 1) / 2);
+    }
+    newList[currentPosition] = value;
+    setList(newList);
+  }
+  function trickleDown(currentPosition, newList) {
+    debugger;
+    let largerChild;
+    let top = newList[currentPosition];
+    let currentSize = newList.length;
+
+    while (currentPosition < currentSize / 2) {
+      let leftChild = 2 * currentPosition + 1;
+      let rightChild = 2 * currentPosition + 2;
+
+      if (rightChild < currentSize && newList[leftChild] < newList[rightChild])
+        largerChild = rightChild;
+      else largerChild = leftChild;
+      if (top >= newList[largerChild]) break;
+      newList[currentPosition] = newList[largerChild];
+      currentPosition = largerChild;
+    }
+    newList[currentPosition] = top;
+    setList(newList);
   }
   return (
     <div className="box-border w-full h-full">
@@ -241,7 +264,7 @@ function Main() {
         <Linkedlist listData={list} removal={removalIdx} />
       ) : label === "Binary-Search-Tree" ? (
         <Bst listData={list} />
-      ) : label === "Heap" ? (
+      ) : label === "Max-Heap" ? (
         <Heap listData={list} />
       ) : null}
 
