@@ -72,7 +72,6 @@ function Main() {
     else handleAddHeap(value);
   }
   function handleAddHeap(value) {
-    debugger;
     let newList = [...list];
     let currentPosition = newList.length;
     let parentPosition = Math.floor((currentPosition - 1) / 2);
@@ -176,7 +175,46 @@ function Main() {
         break;
     }
   }
-  function removeHeapNode(value) {}
+  function removeHeapNode(value) {
+    let newList = [...list];
+    const size = newList.length;
+    const index = newList.indexOf(value);
+    if (index === -1) {
+      console.log("Provided value does not exist.");
+      return;
+    }
+
+    [newList[index], newList[size - 1]] = [newList[size - 1], newList[index]];
+    newList.splice(size - 1);
+
+    for (let index = parseInt(newList.length / 2 - 1); index >= 0; index--) {
+      maxHeapify(newList, newList.length, index);
+    }
+    setList(newList);
+  }
+
+  function maxHeapify(arr, n, i) {
+    let largest = i;
+    let l = 2 * i + 1; //left child index
+    let r = 2 * i + 2; //right child index
+
+    //If left child is smaller than root
+    if (l < n && arr[l] > arr[largest]) {
+      largest = l;
+    }
+    // If right child is smaller than smallest so far
+    if (r < n && arr[r] > arr[largest]) {
+      largest = r;
+    }
+    // If smallest is not root
+    if (largest !== i) {
+      let temp = arr[i];
+      arr[i] = arr[largest];
+      arr[largest] = temp;
+      // Recursively heapify subtree
+      maxHeapify(arr, n, largest);
+    }
+  }
   function toggleAddPopup() {
     if (label === "") {
       console.log("You must select a structure before you can add nodes.");
@@ -194,33 +232,12 @@ function Main() {
     else setShowRemovePopup(true);
   }
   function trickleUp(value, newList, currentPosition, parentPosition) {
-    debugger;
     while (currentPosition > 0 && newList[parentPosition] < value) {
       newList[currentPosition] = newList[parentPosition];
       currentPosition = parentPosition;
       parentPosition = Math.floor((parentPosition - 1) / 2);
     }
     newList[currentPosition] = value;
-    setList(newList);
-  }
-  function trickleDown(currentPosition, newList) {
-    debugger;
-    let largerChild;
-    let top = newList[currentPosition];
-    let currentSize = newList.length;
-
-    while (currentPosition < currentSize / 2) {
-      let leftChild = 2 * currentPosition + 1;
-      let rightChild = 2 * currentPosition + 2;
-
-      if (rightChild < currentSize && newList[leftChild] < newList[rightChild])
-        largerChild = rightChild;
-      else largerChild = leftChild;
-      if (top >= newList[largerChild]) break;
-      newList[currentPosition] = newList[largerChild];
-      currentPosition = largerChild;
-    }
-    newList[currentPosition] = top;
     setList(newList);
   }
   return (
