@@ -4,17 +4,7 @@ import { TreeNode } from "react-organizational-chart";
 const BstNode = ({ value, remaining }) => {
   const smaller = getSmaller(remaining);
   const larger = getLarger(remaining);
-  const parentType = getParentType(smaller, larger);
 
-  function getParentType(small, large) {
-    if (!small[0] && !large[0]) return 0;
-    //if no children^
-    else if (!small[0] && large[0]) return 1;
-    //if has right child and no left child^
-    else if (small[0] && !large[0]) return 2;
-    //if has left child and no right child^
-    else return 3; //if has two children
-  }
   function getSmaller(data) {
     let small = [];
     for (let i = 0; i < data.length; i++) {

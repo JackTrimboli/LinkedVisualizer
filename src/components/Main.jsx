@@ -4,6 +4,7 @@ import PopupModal from "./PopupModal";
 import Linkedlist from "./Linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
+import { Transition } from "@tailwindui/react";
 
 function Main() {
   const [list, setList] = useState([]);
@@ -11,6 +12,8 @@ function Main() {
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showRemovePopup, setShowRemovePopup] = useState(false);
   const [removalIdx, setRemovalIdx] = useState();
+  const [statusMessage, setStatusMessage] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const options = [
     //React select options
@@ -38,32 +41,43 @@ function Main() {
   function handleSelectChange(selectData) {
     if (selectData.value === 1) {
       if (label === "Linked-List") {
-        console.log("Structure already selected.");
+        setStatusMessage("This Structure is already selected.");
+        displayStatus();
         return;
       }
       setLabel("Linked-List");
-      console.log("Link-list Selected. The List is empty.");
+      setStatusMessage("Link-list Selected. The List is empty.");
+      displayStatus();
     } else if (selectData.value === 2) {
       if (label === "Binary-Search-Tree") {
-        console.log("Structure already selected.");
+        setStatusMessage("This Structure is already selected.");
+        displayStatus();
         return;
       }
       setLabel("Binary-Search-Tree");
-      console.log("BST Selected. The List is empty.");
+      setStatusMessage("BST Selected. The BST is empty.");
+      displayStatus();
     } else if (selectData.value === 3) {
+      if (label === "Max-Heap") {
+        setStatusMessage("This Structure is already selected.");
+        displayStatus();
+        return;
+      }
       setLabel("Max-Heap");
-      console.log("Max-Heap Selected. The List is empty.");
+      setStatusMessage("Max-Heap Selected. The Heap is empty.");
+      displayStatus();
       return;
     }
     setList([]);
   }
   function handleAddNode(value) {
     if (!label) {
-      console.log("Pick a structure first!");
+      setStatusMessage("You must select a structure before you can add nodes.");
+      displayStatus();
       return;
     }
     if (!value) {
-      console.log("You must enter a value.");
+      alert("You must enter a value.");
       return;
     }
     toggleAddPopup();
@@ -79,11 +93,14 @@ function Main() {
   }
   function handleRemoveNode(value) {
     if (!label) {
-      console.log("Pick a Structure First!");
+      setStatusMessage(
+        "You must select a structure before you can remove nodes."
+      );
+      displayStatus();
       return;
     }
     if (!value) {
-      console.log("You must enter a value.");
+      alert("You must enter a value.");
       return;
     }
     toggleRemovePopup();
@@ -99,13 +116,18 @@ function Main() {
       let newList = [...list];
       newList.splice(index, 1);
       setList(newList);
+      setStatusMessage(
+        "The value: " + value + " has been removed from the List."
+      );
+      displayStatus();
     }
   }
   function removeBstNode(value) {
     //Step one: Find first occurance of the val being deleted
     const index = list.indexOf(value);
     if (index === -1) {
-      console.log("Value does not exist in this tree.");
+      setStatusMessage("The entered value does not exist in this BST.");
+      displayStatus();
       return;
     }
     let newList = [...list];
@@ -174,13 +196,16 @@ function Main() {
         console.log("An error occurred.");
         break;
     }
+    setStatusMessage("The value: " + value + " has been removed from the BST.");
+    displayStatus();
   }
   function removeHeapNode(value) {
     let newList = [...list];
     const size = newList.length;
     const index = newList.indexOf(value);
     if (index === -1) {
-      console.log("Provided value does not exist.");
+      setStatusMessage("The entered value does not exist in this heap.");
+      displayStatus();
       return;
     }
 
@@ -190,6 +215,10 @@ function Main() {
     for (let index = parseInt(newList.length / 2 - 1); index >= 0; index--) {
       maxHeapify(newList, newList.length, index);
     }
+    setStatusMessage(
+      "The value: " + value + " has been removed from the heap."
+    );
+    displayStatus();
     setList(newList);
   }
 
@@ -217,7 +246,8 @@ function Main() {
   }
   function toggleAddPopup() {
     if (label === "") {
-      console.log("You must select a structure before you can add nodes.");
+      setStatusMessage("You must select a structure before you can add nodes.");
+      displayStatus();
       return;
     }
     if (showAddPopup) setShowAddPopup(false);
@@ -225,7 +255,10 @@ function Main() {
   }
   function toggleRemovePopup() {
     if (label === "") {
-      console.log("You must select a structure before you can remove nodes.");
+      setStatusMessage(
+        "You must select a structure before you can remove nodes."
+      );
+      displayStatus();
       return;
     }
     if (showRemovePopup) setShowRemovePopup(false);
@@ -239,6 +272,12 @@ function Main() {
     }
     newList[currentPosition] = value;
     setList(newList);
+  }
+  function displayStatus() {
+    setIsOpen(true);
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 3000);
   }
   return (
     <div className="box-border w-full h-full">
@@ -276,7 +315,21 @@ function Main() {
           Select a Data Structure from the drop down menu above.
         </span>
       )}
-
+      {
+        <Transition
+          show={isOpen}
+          enter="transition-opacity duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-1000"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <span className="flex justify-center mt-8 text-gray-400 text-lg transition duration-500 ease-in-out">
+            {statusMessage}
+          </span>
+        </Transition>
+      }
       {label === "Linked-List" ? (
         <Linkedlist listData={list} removal={removalIdx} />
       ) : label === "Binary-Search-Tree" ? (
