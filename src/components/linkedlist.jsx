@@ -1,53 +1,24 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import Node from "./Node";
 
 const Linkedlist = (props) => {
-  const [nodes, setNodes] = useState([]);
-  const [key, setKey] = useState(0);
-  const [isMounted, setIsMounted] = useState(false);
+  const list = convertToLinkedList(props.listData);
 
-  useEffect(() => {
-    if (isMounted) {
-      if (nodes.length < props.listData.length) {
-        handleAddNode();
-      } else if (nodes.length > props.listData.length) {
-        handleRemoveNode();
-      }
-    } else setIsMounted(true);
-  }, [props.listData]);
-
-  function isEmpty() {
-    if (nodes.length === 0) return true;
-    return false;
+  function convertToLinkedList(data) {
+    return data.map((x, index) => <Node value={x} key={index} />);
   }
 
-  function handleAddNode() {
-    setNodes([
-      ...nodes,
-      <Node value={props.listData[props.listData.length - 1]} key={key} />,
-    ]);
-    setKey(key + 1);
-  }
-  function handleRemoveNode() {
-    console.log(
-      "Removal Detect by useEffect in 'Linked-List. Current List:" +
-        props.listData.toLocaleString()
-    );
-    let newNodes = [...nodes];
-    newNodes.splice(props.removal, 1);
-    setNodes(newNodes);
-  }
-  if (isEmpty()) {
+  if (props.listData.length === 0) {
     return (
       <span className="absolute w-full top-1/2 flex justify-center text-gray-400 text-lg">
-        The list is currently empty.
+        The Linked-List is currently empty.
       </span>
     );
   } else {
     return (
-      <div className="m-0 absolute w-full top-1/2 flex justify-evenly">
+      <div className="ml-50 absolute top-1/2 flex justify-evenly">
         <ul className="flex flex-row items-center justify-evenly">
-          {nodes}
+          {list}
           <li className="text-2xl font-bold">NULL</li>
         </ul>
       </div>

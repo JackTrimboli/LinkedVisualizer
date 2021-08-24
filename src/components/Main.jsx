@@ -11,7 +11,6 @@ function Main() {
   const [label, setLabel] = useState("");
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [showRemovePopup, setShowRemovePopup] = useState(false);
-  const [removalIdx, setRemovalIdx] = useState();
   const [statusMessage, setStatusMessage] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -66,7 +65,6 @@ function Main() {
       setLabel("Max-Heap");
       setStatusMessage("Max-Heap Selected. The Heap is empty.");
       displayStatus();
-      return;
     }
     setList([]);
   }
@@ -111,9 +109,8 @@ function Main() {
   }
   function removeListNode(value) {
     if (list.length > 0) {
-      const index = list.indexOf(value);
-      setRemovalIdx(index);
       let newList = [...list];
+      const index = newList.indexOf(value);
       newList.splice(index, 1);
       setList(newList);
       setStatusMessage(
@@ -282,18 +279,18 @@ function Main() {
   return (
     <div className="box-border w-full h-full">
       {/* <Tutorial /> */}
-      <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5">
+      <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5 fixed top-0">
         <button className="ml-8 mr-8 text-lg font-bold focus:outline-none">
           Linked Visualizer
         </button>
         <button
-          className="ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 active:bg-blue-600"
+          className="mx-8 px-2 py-1 text-lg font-bold rounded-lg  focus:outline-none hover:bg-blue-400 active:bg-blue-600 "
           onClick={toggleAddPopup}
         >
           Add Node
         </button>
         <button
-          className="ml-8 mr-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
+          className="mx-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
           onClick={toggleRemovePopup}
         >
           Remove Node
@@ -307,11 +304,11 @@ function Main() {
         />
       </nav>
       {label ? (
-        <span className="flex justify-center mt-8 text-gray-400 text-lg">
+        <span className="flex justify-center mt-32 w-full justify center text-gray-400 text-lg ">
           Now Displaying: {label}
         </span>
       ) : (
-        <span className="flex justify-center mt-8 text-gray-400 text-lg">
+        <span className="flex justify-center mt-32 w-full justify center text-gray-400 text-lg ">
           Select a Data Structure from the drop down menu above.
         </span>
       )}
@@ -325,13 +322,13 @@ function Main() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <span className="flex justify-center mt-8 text-gray-400 text-lg transition duration-500 ease-in-out">
+          <span className="flex justify-center m-4 w-full z-0 justify center text-gray-400 text-lg ">
             {statusMessage}
           </span>
         </Transition>
       }
       {label === "Linked-List" ? (
-        <Linkedlist listData={list} removal={removalIdx} />
+        <Linkedlist listData={list} />
       ) : label === "Binary-Search-Tree" ? (
         <Bst listData={list} />
       ) : label === "Max-Heap" ? (
