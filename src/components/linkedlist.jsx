@@ -16,7 +16,7 @@ const Linkedlist = (props) => {
     );
   } else {
     return (
-      <div className="ml-50 absolute top-1/2 flex justify-evenly">
+      <div className="px-8 mx-8 absolute top-1/2 left-1/2 right-1/2 flex justify-evenly">
         <ul className="flex flex-row items-center justify-evenly">
           {list}
           <li className="text-2xl font-bold">NULL</li>

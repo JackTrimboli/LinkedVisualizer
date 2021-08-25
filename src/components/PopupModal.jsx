@@ -30,14 +30,14 @@ const PopupModal = (props) => {
               <div className="relative p-6 flex-auto items-center justify-center items-center">
                 <input
                   className="my-4 ml-5 py-2 bg-gray-100 text-xl leading-relaxed text-center rounded-md focus:outline-none"
-                  type="number"
+                  type="text"
                   placeholder="Enter a number"
                   onChange={(e) => setModalData(e.target.value)}
                   defaultValue={0}
                   autoFocus={true}
                   onFocus={(event) => event.target.select()}
                   onKeyPress={handleKeyPress}
-                  maxLength={5}
+                  maxLength={"5"}
                 />
               </div>
               {/*footer*/}

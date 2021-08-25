@@ -279,7 +279,7 @@ function Main() {
   return (
     <div className="box-border w-full h-full">
       {/* <Tutorial /> */}
-      <nav className="bg-blue-500 w-full text-white shadow-md p-3.5 fixed top-0">
+      <nav className="bg-blue-500 w-screen overflow-visible text-white shadow-md p-3.5 fixed top-0">
         <a
           className="block float-left px-8 pt-1 text-lg font-bold focus:outline-none "
           href="/"
@@ -307,11 +307,11 @@ function Main() {
         />
       </nav>
       {label ? (
-        <span className="flex justify-center mt-32 text-center w-full justify center text-gray-400 text-lg ">
+        <span className="flex justify-center mt-32 px-2 pt-2  text-center w-full justify center text-gray-400 text-lg ">
           Now Displaying: {label}
         </span>
       ) : (
-        <span className="flex justify-center mt-32 text-center w-full justify center text-gray-400 text-lg ">
+        <span className="flex justify-center mt-32 px-2 pt-2 text-center w-full justify center text-gray-400 text-lg ">
           Select a Data Structure from the drop down menu above.
         </span>
       )}
@@ -325,7 +325,7 @@ function Main() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <span className="flex justify-center mt-2 w-full z-0 justify center text-gray-400 text-lg ">
+          <span className="flex justify-center mt-4 px-2 text-center w-full justify center text-gray-400 text-lg">
             {statusMessage}
           </span>
         </Transition>
