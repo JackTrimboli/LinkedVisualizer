@@ -279,18 +279,21 @@ function Main() {
   return (
     <div className="box-border w-full h-full">
       {/* <Tutorial /> */}
-      <nav className="bg-blue-500 h-16 min-w-full text-white shadow-md p-3.5 fixed top-0">
-        <button className="ml-8 mr-8 text-lg font-bold focus:outline-none">
+      <nav className="bg-blue-500 w-full text-white shadow-md p-3.5 fixed top-0">
+        <a
+          className="block float-left px-8 pt-1 text-lg font-bold focus:outline-none "
+          href="/"
+        >
           Linked Visualizer
-        </button>
+        </a>
         <button
-          className="mx-8 px-2 py-1 text-lg font-bold rounded-lg  focus:outline-none hover:bg-blue-400 active:bg-blue-600 "
+          className="block float-left px-8 pt-1 text-lg font-bold rounded-lg  focus:outline-none hover:bg-blue-400 active:bg-blue-600"
           onClick={toggleAddPopup}
         >
           Add Node
         </button>
         <button
-          className="mx-8 px-2 py-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400"
+          className="block float-left px-8 pt-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 "
           onClick={toggleRemovePopup}
         >
           Remove Node
@@ -299,16 +302,16 @@ function Main() {
           autoFocus={true}
           onChange={handleSelectChange}
           options={options}
-          className="inline-block"
+          className="inline-block absolute"
           styles={selectStyles}
         />
       </nav>
       {label ? (
-        <span className="flex justify-center mt-32 w-full justify center text-gray-400 text-lg ">
+        <span className="flex justify-center mt-32 text-center w-full justify center text-gray-400 text-lg ">
           Now Displaying: {label}
         </span>
       ) : (
-        <span className="flex justify-center mt-32 w-full justify center text-gray-400 text-lg ">
+        <span className="flex justify-center mt-32 text-center w-full justify center text-gray-400 text-lg ">
           Select a Data Structure from the drop down menu above.
         </span>
       )}
@@ -318,11 +321,11 @@ function Main() {
           enter="transition-opacity duration-500"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition-opacity duration-1000"
+          leave="transition-opacity duration-500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <span className="flex justify-center m-4 w-full z-0 justify center text-gray-400 text-lg ">
+          <span className="flex justify-center mt-2 w-full z-0 justify center text-gray-400 text-lg ">
             {statusMessage}
           </span>
         </Transition>
