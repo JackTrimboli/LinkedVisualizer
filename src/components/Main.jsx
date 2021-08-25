@@ -1,7 +1,7 @@
 import { useState, React } from "react";
 import Select from "react-select";
 import PopupModal from "./PopupModal";
-import Linkedlist from "./Linkedlist";
+import Linkedlist from "./linkedlist";
 import Bst from "./Bst";
 import Heap from "./Heap";
 import { Transition } from "@tailwindui/react";
@@ -279,32 +279,38 @@ function Main() {
   return (
     <div className="box-border w-full h-full">
       {/* <Tutorial /> */}
-      <nav className="bg-blue-500 w-screen overflow-visible text-white shadow-md p-3.5 fixed top-0">
-        <a
-          className="block float-left px-8 pt-1 text-lg font-bold focus:outline-none "
-          href="/"
-        >
-          Linked Visualizer
-        </a>
-        <button
-          className="block float-left px-8 pt-1 text-lg font-bold rounded-lg  focus:outline-none hover:bg-blue-400 active:bg-blue-600"
-          onClick={toggleAddPopup}
-        >
-          Add Node
-        </button>
-        <button
-          className="block float-left px-8 pt-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 "
-          onClick={toggleRemovePopup}
-        >
-          Remove Node
-        </button>
-        <Select
-          autoFocus={true}
-          onChange={handleSelectChange}
-          options={options}
-          className="inline-block absolute"
-          styles={selectStyles}
-        />
+      <nav className="bg-blue-500 w-screen overflow-visible text-white shadow-md p-3.5 fixed top-0 z-50">
+        <div>
+          <a
+            className="block float-left px-8 pt-1 text-xl font-bold focus:outline-none "
+            href="/"
+          >
+            Linked Visualizer
+          </a>
+        </div>
+        <div>
+          <button
+            className="block float-left px-8 pt-1 text-lg font-bold rounded-lg  focus:outline-none hover:bg-blue-400 active:bg-blue-600"
+            onClick={toggleAddPopup}
+          >
+            Add Node
+          </button>
+          <button
+            className="block float-left px-8 pt-1 text-lg font-bold rounded-lg focus:outline-none hover:bg-blue-400 "
+            onClick={toggleRemovePopup}
+          >
+            Remove Node
+          </button>
+        </div>
+        <div>
+          <Select
+            autoFocus={true}
+            onChange={handleSelectChange}
+            options={options}
+            className="inline-block absolute"
+            styles={selectStyles}
+          />
+        </div>
       </nav>
       {label ? (
         <span className="flex justify-center mt-32 px-2 pt-2  text-center w-full justify center text-gray-400 text-lg ">

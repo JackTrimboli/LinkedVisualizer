@@ -17,7 +17,7 @@ const Bst = (props) => {
     );
   } else {
     return (
-      <div className="m-4 absolute w-full top-1/3 flex justify-evenly">
+      <div className=" w-full mx-auto absolute top-1/3 z-0 flex justify-evenly">
         <Tree
           lineWidth={"5px"}
           lineColor={"black"}
