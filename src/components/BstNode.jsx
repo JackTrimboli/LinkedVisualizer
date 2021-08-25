@@ -31,7 +31,7 @@ const BstNode = ({ value, remaining }) => {
   );
 
   return (
-    <TreeNode label={nodeLabel}>
+    <TreeNode label={nodeLabel} className="pb-10 z-0">
       {smaller[0] && (
         <BstNode
           value={smaller[0]}

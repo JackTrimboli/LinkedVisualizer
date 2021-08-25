@@ -13,7 +13,7 @@ const HeapNode = ({ value, remaining, n }) => {
   );
 
   return (
-    <TreeNode label={nodeLabel}>
+    <TreeNode label={nodeLabel} className="pb-10 z-0">
       {remaining[2 * n + 1] && (
         <HeapNode
           value={remaining[2 * n + 1]}
