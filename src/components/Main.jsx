@@ -283,7 +283,7 @@ function Main() {
         <div>
           <a
             className="block float-left px-8 pt-1 text-xl font-bold focus:outline-none "
-            href="/"
+            href="https://jacktrimboli.github.io/LinkedVisualizer/"
           >
             Linked Visualizer
           </a>
